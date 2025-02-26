@@ -1,8 +1,40 @@
-
-{% for pharmacy in pharmacies %}
-    <div class="pharmacy">
-        <h2>{{pharmacy.name}}</h2>
-        <p>{{pharmacy.address}}</p>
-        <p>{{pharmacy.phone}}</p>
+{% extends '../base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Pharmacies</h1>
+    <div class="row">
+        {% for pharmacy in pharmacies %}
+            <div class="col-md-4 mb-4">
+                <div class="card pharmacy-card h-100 shadow-sm">
+                    <div class="card-body">
+                        <a href="{% url 'pharmacy_detail' pk=pharmacy.id %}" class="text-decoration-none">
+                            <h2 class="card-title h5 text-primary">{{pharmacy.name}}</h2>
+                        </a>
+                        <p class="card-text text-muted">
+                            <i class="fas fa-map-marker-alt me-2"></i>
+                            {{pharmacy.address|default:"Address not available"}}
+                        </p>
+                        <p class="card-text">
+                            <i class="fas fa-phone me-2"></i>
+                            {{pharmacy.phone|default:"Phone not available"}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12">
+                <p class="text-center">No pharmacies found.</p>
+            </div>
+        {% endfor %}
     </div>
-{% endfor %}
+</div>
+
+<style>
+    .pharmacy-card {
+        transition: transform 0.2s;
+    }
+    .pharmacy-card:hover {
+        transform: translateY(-5px);
+    }
+</style>
+{% endblock %}

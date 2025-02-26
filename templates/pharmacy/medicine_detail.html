@@ -1,3 +1,75 @@
-{{medicine.name}}
-{{medicine.description}}
-{{medicine.price}}
+{% extends '../base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'medicine_list' %}">Medicines</a></li>
+            <li class="breadcrumb-item active">{{medicine.name}}</li>
+        </ol>
+    </nav>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-8">
+                    <h1 class="card-title mb-3">{{medicine.name}}</h1>
+                    
+                    <div class="mb-4">
+                        <h5 class="text-muted mb-3">Description</h5>
+                        <p class="card-text">
+                            {{medicine.description|default:"No description available"}}
+                        </p>
+                    </div>
+
+                    <div class="mb-4">
+                        <h5 class="text-muted mb-3">Details</h5>
+                        <ul class="list-unstyled">
+                            <li class="mb-2">
+                                <i class="fas fa-prescription-bottle me-2 text-primary"></i>
+                                Category: {{medicine.category|default:"Not categorized"}}
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-pills me-2 text-primary"></i>
+                                Dosage: {{medicine.dosage|default:"Not specified"}}
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-industry me-2 text-primary"></i>
+                                Manufacturer: {{medicine.manufacturer|default:"Not specified"}}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <h5 class="card-title">Price</h5>
+                            <div class="mb-3">
+                                <span class="h2 text-success">₹{{medicine.price}}</span>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-primary">
+                                    <i class="fas fa-shopping-cart me-2"></i>Add to Cart
+                                </button>
+                                <button class="btn btn-outline-secondary">
+                                    <i class="fas fa-heart me-2"></i>Add to Wishlist
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .breadcrumb {
+        background-color: transparent;
+        padding: 0.75rem 0;
+    }
+    .card {
+        border-radius: 0.5rem;
+    }
+</style>
+{% endblock %}

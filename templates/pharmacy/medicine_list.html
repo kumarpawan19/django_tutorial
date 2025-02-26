@@ -1,7 +1,38 @@
-{%for medicine in medicines %}
-    <div class="medicine">
-        <h2>{{medicine.name}}</h2>
-        <p>{{medicine.description}}</p>
-        <p>{{medicine.price}}</p>
+{% extends '../base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">Medicines</h1>
+    <div class="row">
+        {% for medicine in medicines %}
+            <div class="col-md-3 mb-4">
+                <div class="card medicine-card h-100 shadow-sm">
+                    <div class="card-body">
+                        <a href="{% url 'medicine_detail' pk=medicine.id %}" class="text-decoration-none">
+                            <h2 class="card-title h5 text-primary">{{medicine.name}}</h2>
+                        </a>
+                        <p class="card-text text-muted small">
+                            {{medicine.description|truncatechars:100}}
+                        </p>
+                        <div class="mt-3">
+                            <span class="h5 mb-0 text-success">₹{{medicine.price}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12">
+                <p class="text-center">No medicines found.</p>
+            </div>
+        {% endfor %}
     </div>
-{% endfor %}
+</div>
+
+<style>
+    .medicine-card {
+        transition: transform 0.2s;
+    }
+    .medicine-card:hover {
+        transform: translateY(-5px);
+    }
+</style>
+{% endblock %}                                                                                                                                            

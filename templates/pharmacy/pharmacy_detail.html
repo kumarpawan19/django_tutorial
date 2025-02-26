@@ -1,3 +1,70 @@
-{{pharmacy.name}} <br>
-{{pharmacy.address}}
-{{pharmacy.phone}}
+{% extends '../base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'pharmacy_list' %}">Pharmacies</a></li>
+            <li class="breadcrumb-item active">{{pharmacy.name}}</li>
+        </ol>
+    </nav>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-8">
+                    <h1 class="card-title mb-4">{{pharmacy.name}}</h1>
+                    
+                    <div class="mb-4">
+                        <h5 class="text-muted mb-3">Contact Information</h5>
+                        <p class="card-text">
+                            <i class="fas fa-map-marker-alt me-2 text-primary"></i>
+                            {{pharmacy.address|default:"Address not available"}}
+                        </p>
+                        <p class="card-text">
+                            <i class="fas fa-phone me-2 text-primary"></i>
+                            {{pharmacy.phone|default:"Phone not available"}}
+                        </p>
+                    </div>
+
+                    <!-- Add more details as needed -->
+                    <div class="mb-4">
+                        <h5 class="text-muted mb-3">Operating Hours</h5>
+                        <p class="card-text">
+                            <i class="fas fa-clock me-2 text-primary"></i>
+                            {{pharmacy.hours|default:"Hours not available"}}
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <h5 class="card-title">Quick Actions</h5>
+                            <div class="d-grid gap-2">
+                                <a href="tel:{{pharmacy.phone}}" class="btn btn-primary">
+                                    <i class="fas fa-phone me-2"></i>Call Now
+                                </a>
+                                <a href="https://maps.google.com/?q={{pharmacy.address}}" 
+                                   target="_blank" 
+                                   class="btn btn-outline-secondary">
+                                    <i class="fas fa-directions me-2"></i>Get Directions
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .breadcrumb {
+        background-color: transparent;
+        padding: 0.75rem 0;
+    }
+    .card {
+        border-radius: 0.5rem;
+    }
+</style>
+{% endblock %}
