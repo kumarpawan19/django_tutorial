@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="hero-section mb-5">
+    <div class="container text-center py-5">
+        <h1 class="display-4 fw-bold">Welcome to RunPharmacy</h1>
+        <p class="lead mb-4">Your trusted healthcare partner for all pharmaceutical needs</p>
+        <div class="d-flex justify-content-center gap-3">
+                <a href="{% url 'login' %}" class="btn btn-light btn-lg px-4">Login</a>
+                <a href="{% url 'signup' %}" class="btn btn-success btn-lg px-4">Sign Up</a>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <!-- Services Section -->
+    <section class="mb-5">
+        <h2 class="text-center mb-4">Our Services</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="fas fa-pills fa-3x text-primary mb-3"></i>
+                        <h3 class="h5">Prescription Services</h3>
+                        <p class="text-muted">Quick and reliable prescription fulfillment with expert pharmacists.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="fas fa-truck fa-3x text-primary mb-3"></i>
+                        <h3 class="h5">Home Delivery</h3>
+                        <p class="text-muted">Fast and secure delivery of medications right to your doorstep.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="fas fa-user-md fa-3x text-primary mb-3"></i>
+                        <h3 class="h5">Health Consultation</h3>
+                        <p class="text-muted">Professional healthcare advice from qualified pharmacists.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Pharmacies -->
+    <section class="mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Featured Pharmacies</h2>
+            <a href="{% url 'pharmacy_list' %}" class="btn btn-outline-primary">View All</a>
+        </div>
+        <div class="row g-4">
+            {% for pharmacy in pharmacies|slice:":3" %}
+                <div class="col-md-4">
+                    <div class="card pharmacy-card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h3 class="card-title h5 text-primary">{{ pharmacy.name }}</h3>
+                            <p class="card-text text-muted">
+                                <i class="fas fa-map-marker-alt me-2"></i>
+                                {{ pharmacy.address|default:"Address not available" }}
+                            </p>
+                            <p class="card-text">
+                                <i class="fas fa-phone me-2"></i>
+                                {{ pharmacy.phone|default:"Phone not available" }}
+                            </p>
+                            <a href="{% url 'pharmacy_detail' pk=pharmacy.id %}" class="btn btn-outline-primary btn-sm">
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-12">
+                    <p class="text-center">No pharmacies available at the moment.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="text-center py-5 bg-light rounded">
+        <h2 class="mb-4">Ready to Join Our Network?</h2>
+        <p class="lead mb-4">Register your pharmacy with us and reach more customers</p>
+        <a href="{% url 'signup' %}" class="btn btn-primary btn-lg">Get Started</a>
+    </section>
+</div>
+
+<style>
+    .hero-section {
+        background: linear-gradient(rgba(44, 139, 191, 0.9), rgba(44, 139, 191, 0.9)),
+                    url('https://images.unsplash.com/photo-1585435557343-3b092031a831');
+        background-size: cover;
+        background-position: center;
+        color: white;
+    }
+
+    .pharmacy-card {
+        transition: transform 0.2s;
+    }
+
+    .pharmacy-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .card {
+        transition: transform 0.3s;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+</style>
+{% endblock %}
