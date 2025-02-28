@@ -6,7 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ['customer_name', 'customer_contact', 'customer_address', 
+        fields = ['customer', 'customer_contact', 'customer_address', 
                   'pharmacy', 'delivery_method']
         
 class SignUpForm(UserCreationForm):

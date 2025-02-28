@@ -107,7 +107,13 @@ def login_view(request):
 
 @login_required(login_url='/pharmacy/login/')
 def customer_dashboard(request):
-    return render(request, 'pharmacy/customer_dashboard.html')
+    # Get orders for current user
+    total_orders = Order.objects.filter(customer=request.user).count()
+    recent_orders = Order.objects.filter(customer=request.user).order_by('-created_at')[:5]
+    return render(request, 'pharmacy/customer_dashboard.html', {
+        'total_orders': total_orders,
+        'recent_orders': recent_orders
+    })
 
 @login_required(login_url='/pharmacy/login/')
 def pharmacy_dashboard(request):

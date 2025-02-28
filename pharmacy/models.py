@@ -36,6 +36,7 @@ class Order(models.Model):
         ('HOME_DELIVERY', 'Home Delivery'),
     ]
     
+    customer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, limit_choices_to={'groups__name': 'customer'})
     customer_name = models.CharField(max_length=100)
     customer_contact = models.CharField(max_length=100)
     customer_address = models.TextField()
@@ -43,6 +44,9 @@ class Order(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='PENDING')
     delivery_method = models.CharField(max_length=20, choices=DELIVERY_CHOICES)
+
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='orders_created')
+    created_at = models.DateTimeField(auto_now_add=True)
 
 
     def __str__(self):
